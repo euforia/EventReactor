@@ -8,14 +8,13 @@ import logging
 import json
 
 from optparse import OptionParser
-from multiprocessing import Pool, cpu_count
+from multiprocessing import cpu_count
 
 from eventreactor.mqaggr.wrappers.zmqwrappers import ZBase
 from eventreactor.eventhandlers import EventFilterManager, DriverManager
 
 from pprint import pprint
 
-FILTERS_CFGFILE = "etc/event-handlers.json"
 
 log = logging.getLogger(__name__)
 
@@ -39,8 +38,7 @@ class EventSubscriber(object):
 	def __runHandlers(self, handlers, data):
 		for handler in handlers:
 			if handler.get('exclusive'):
-				#pool.apply_async(self.__executeHandler, handler, data, exclusiveCallback)
-				self.log.info("TODO: exclusive handler: %s, data: %s" %(str(handler), str(data)))
+				self.log.warning("TODO: exclusive handler: %s, data: %s" %(str(handler), str(data)))
 			else:
 				rslt = self.__executeHandler(handler, data)
 				self.log.info("Result: %s" %(str(rslt)))
@@ -63,15 +61,10 @@ class EventSubscriber(object):
 		except KeyboardInterrupt:
 			self.zbase.close()
 
-'''
-def getWorkerPool():
-	workers = cpu_count()-1
-	if workers == 0: workers = 1
-	return Pool(workers)
-'''
+
 def checkOptions():
 	parser = OptionParser()
-	parser.add_option("-e", "--event-filters", dest="eventFilters", default="etc/event-handlers.json",
+	parser.add_option("-e", "--event-filters", dest="eventFilters", default="/etc/event-reactor/event-handlers.json",
 			help="Event filters config file")
 	parser.add_option("-u", "--publisher-uri", dest="pubUri", default="tcp://127.0.0.1:55000",
 			help="URI of publisher to connect to")
@@ -92,15 +85,9 @@ def main():
 
 	(opts, args) = checkOptions()
 
-	#workerPool = getWorkerPool()
-	#log.info("Workers: %d" %(workerPool._processes))
-
 	esub = EventSubscriber(opts.pubUri, event_filters=opts.eventFilters)
 	esub.start()
 
-	#workerPool.close()
-	#workPool.join()
-	#workPool.terminate()
 
 
 

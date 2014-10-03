@@ -28,7 +28,7 @@ def loadInputFeeders(config):
 
 def checkOptions():
 	parser = OptionParser()
-	parser.add_option("-c", "--config", dest="config", default="etc/config.json")
+	parser.add_option("-c", "--config", dest="config", default="/etc/event-reactor/config.json")
 	(opts, args) = parser.parse_args()
 
 	opts.config = loadConfig(opts.config)
