@@ -5,7 +5,6 @@
 
 # Application #
 ###############
-handler_*.py
 
 # Python #
 ##########
