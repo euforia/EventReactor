@@ -32,16 +32,36 @@ The handler is the class responsible for managing that particular type of input.
 
 * **aggregator**
 
+event-handlers
+==============
+These are custom user handlers.  They are located in the **/etc/event-reactor/event-handlers** directory.  A sample testing.py has been provided.  
+
+To add your own handler,
+
+* Copy your python script into the **/etc/event-reactor/event-handlers**
+* Update event-handlers.json with the appropriate information.  *More below*
+
 event-handlers.json
 ===================
 This configuration file contains all events to listen to as well as handlers for each event::
 
   {
-    "event.type": [
+    "<event.type>": [
       {
         "driver": "<'shell' or 'pyfunc'>",
-        "handler": "<path_to_handler>"
+        "handler": "<path.to.handler>"
       }
     ]
   }
+
+* event.type - The name of the event to subscribe to.
+
+* driver - This can either be 'shell' or 'pyfunc'.  
+	* shell - Allows to run arbitrary shell scripts on an event
+	* pyfunc - Allows to run a python function
+
+* handler
+	* shell
+	* pyfunc
+
 
