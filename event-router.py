@@ -31,7 +31,11 @@ def checkOptions():
 	parser.add_option("-c", "--config", dest="config", default="/etc/event-reactor/config.json")
 	(opts, args) = parser.parse_args()
 
-	opts.config = loadConfig(opts.config)
+	if os.path.exists(opts.config):
+		opts.config = loadConfig(opts.config)
+	else:
+		print "\n * Could not find config: %s\n" %(opts.config)
+		sys.exit(1)
 
 	return (opts, args)
 
@@ -39,9 +43,10 @@ def checkOptions():
 def main():
 	(opts, args) = checkOptions()
 
+	log = logging.getLogger(__name__)	
 	logging.basicConfig(level=eval("logging.%s" %(opts.config['logging']['loglevel'])), 
 												format=opts.config['logging']['format'])
-	log = logging.getLogger(__name__)
+	
 
 	aggrConfig = opts.config['aggregator']['config']
 	aggrServer = ZBase(aggrConfig['uri'], aggrConfig['type'])

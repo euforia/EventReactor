@@ -71,8 +71,10 @@ def checkOptions():
 
 	(opts, args) = parser.parse_args()
 
-	if not os.path.exists(opts.eventFilters):
-		log.error("File not found: %s" %(opts.eventFilters))
+	if os.path.exists(opts.eventFilters):
+		opts.eventFilters = json.load(open(opts.eventFilters))
+	else:
+		print "\n * Event filters config not found: %s\n" %(opts.eventFilters)
 		sys.exit(1)
 
 	return opts, args
@@ -87,8 +89,6 @@ def main():
 
 	esub = EventSubscriber(opts.pubUri, event_filters=opts.eventFilters)
 	esub.start()
-
-
 
 
 if __name__ == "__main__":

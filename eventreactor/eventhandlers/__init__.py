@@ -73,9 +73,8 @@ class DriverManager(object):
 
 class EventFilterManager(object):
 	
-	def __init__(self, cfgfile):
-		#self.listenEvents = shelve.open(cfgfile, writeBack=True)
-		self.listenEvents = json.load(open(cfgfile, "rb"))
+	def __init__(self, listen_filters):
+		self.listenEvents = listen_filters
 		# set default exclusive
 		for k, handlers in self.listenEvents.items():
 			for h in handlers:
