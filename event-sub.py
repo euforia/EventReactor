@@ -13,6 +13,7 @@ from pprint import pprint
 logFormat = "%(asctime)s (%(process)d) [%(levelname)s %(lineno)s:%(name)s.%(funcName)s]: %(message)s"
 log = logging.getLogger(__name__)
 
+
 def checkOptions():
 	parser = OptionParser()
 	parser.add_option("--event-handlers", 	   dest="eventHandlers", default="/etc/event-reactor/event-handlers",
