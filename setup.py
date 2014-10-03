@@ -15,5 +15,5 @@ setup(
 		('/etc/event-reactor',			 ['etc/config.json.sample', 'etc/event-handlers.json.sample']),
 		('/usr/local/bin/event-reactor', ['fire-event.py', 'event-router.py', 'event-sub.py'])
 	],
-	install_requires=[ for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
+	install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
 )
