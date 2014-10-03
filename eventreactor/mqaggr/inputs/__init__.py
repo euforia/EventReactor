@@ -1,4 +1,5 @@
 
+import logging
 import json
 
 from multiprocessing import Process, Event
@@ -20,12 +21,15 @@ class BaseInput(Process):
 
 class AMQPInput(BaseInput):
 
+	log = logging.getLogger("%s.AMQPInput" %(__name__))
+
 	def __init__(self, outputUri, outputType="zmq.PUSH", config={}):
 		super(AMQPInput, self).__init__(outputUri, outputType, config)
 		self.exit = Event()
 
 	def run(self):
 		zbase = ZBase(uri=self.outputUri, zmqType=self.outputType)
+		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
 		zbase.connect()
 		
 		rabbitmqConsumer = RabbitMQConsumer(**self.config)
@@ -47,6 +51,8 @@ class AMQPInput(BaseInput):
 
 class ZMQInput(BaseInput):
 
+	log = logging.getLogger("%s.ZMQInput" %(__name__))
+
 	def __init__(self, outputUri, outputType="zmq.PUSH", config={}):
 		super(ZMQInput, self).__init__(outputUri, outputType, config)
 		self.exit = Event()
@@ -54,9 +60,11 @@ class ZMQInput(BaseInput):
 
 	def run(self):
 		output = ZBase(uri=self.outputUri, zmqType=self.outputType)
+		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
 		output.connect()
 
 		inputServer = ZBase(uri=self.config['uri'], zmqType=self.config['type'])
+		self.log.info("Listening on (%s): %s" %(self.config['type'], self.config['uri']))
 		inputServer.bind()
 
 		while not self.exit.is_set():

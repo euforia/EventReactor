@@ -50,10 +50,12 @@ def main():
 
 	aggrConfig = opts.config['aggregator']['config']
 	aggrServer = ZBase(aggrConfig['uri'], aggrConfig['type'])
+	log.info("Listening on (%s): %s" %(aggrConfig['type'], aggrConfig['uri']))
 	aggrServer.bind()
 	
 	pubSrvCfg = opts.config['outputs'][0]['config']
 	pubServer = ZBase(pubSrvCfg['uri'], pubSrvCfg['type'])
+	log.info("Listening on (%s): %s" %(pubSrvCfg['type'], pubSrvCfg['uri']))
 	pubServer.bind()
 	
 	feeders = loadInputFeeders(opts.config)

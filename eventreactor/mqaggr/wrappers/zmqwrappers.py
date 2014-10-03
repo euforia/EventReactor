@@ -22,12 +22,12 @@ class ZBase(object):
 
 
 	def bind(self):
-		self.log.info("Listening on: '%s'" %(self.uri))
+		#self.log.info("Listening on: '%s'" %(self.uri))
 		self.sock.bind(self.uri)
 
 
 	def connect(self):
-		self.log.info("Connecting to: '%s'" %(self.uri))
+		#self.log.info("Connecting to: '%s'" %(self.uri))
 		self.sock.connect(self.uri)
 		if self.zmqType == "zmq.SUB":
 			for topic in self.__extras['topics']:
