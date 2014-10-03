@@ -92,7 +92,8 @@ def main():
 
 	(opts, args) = checkOptions()
 
-	esub = EventSubscriber(opts.pubUri, event_filters=opts.eventFilters, event_handlers_dir=opts.eventHandlers)
+	esub = EventSubscriber(opts.pubUri, event_filters=opts.eventFilters, 
+										event_handlers_dir=opts.eventHandlers)
 	esub.start()
 
 
