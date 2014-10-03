@@ -16,7 +16,7 @@ The configurations live under **/etc/event-reactor**.
 
 * **config.json** - Global configuration file.
 
-* **event-handlers** - User defined custom event handlers.  All custom actions code should be dropped in this directory. 
+* **event-handlers** - This directory contains user defined custom event handlers. 
 
 * **event-handlers.json** - Event subscription and respective handlers configuration.
 
