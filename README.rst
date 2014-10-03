@@ -56,13 +56,10 @@ This configuration file contains all events to listen to as well as handlers for
 
 * event.type - The name of the event to subscribe to.
 
-* driver
-This can either be **shell** or **pyfunc**.  
-	* **shell** - Allows to run arbitrary shell scripts on an event
-	* **pyfunc** - Allows to run a python function
+* driver - This can either be **shell** or **pyfunc**.  
 
 * handler
-	* shell
-	* pyfunc
+	* driver: shell - Shell command to run.  The event will be passed as a json string the last argument.
+	* driver: pyfunc - Path to python function under */etc/event-reactor/event-handlers*
 
 
