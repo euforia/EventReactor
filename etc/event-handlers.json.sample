@@ -1,0 +1,24 @@
+{
+	"openstack.identity.project.authenticate": [
+		{
+			"driver": "pyfunc",
+			"handler": "debug.dumpEvent",
+			"exclusive": false
+		},{
+			"driver": "shell",
+			"handler": "echo",
+			"exclusive": false
+		}
+	],
+	"local.zmq.test": [
+		{
+			"driver": "shell",
+			"handler": "echo",
+			"exclusive": false
+		},{
+			"driver": "pyfunc",
+			"handler": "debug.dumpEvent",
+			"exclusive": false
+		}
+	]
+}
