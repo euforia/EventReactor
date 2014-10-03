@@ -2,13 +2,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='event-reactor',
+    name='EventReactor',
     version='0.1.0',
-    url='http://git.tm.tmcs/infradev/event-reactor.git',
+    url='https://github.com/euforia/EventReactor.git',
     description='Hookable and reactable event system',
     long_description=open('README.rst').read(),
-    author='abs',
-    author_email='abs.pathak@ticketmaster.com',
+    author='euforia',
+    author_email='euforia@gmail.com',
     license='LICENSE.txt',
     packages=find_packages(),
     data_files=[
