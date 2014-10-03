@@ -8,22 +8,22 @@ Configuration
 =============
 There are 2 configuration files: 
 
-	**config.json** - Global configuration file.
+* **config.json** - Global configuration file.
 
-	**event-handlers.json** - Event subscription and respective handlers.
+* **event-handlers.json** - Event subscription and respective handlers.
 
 
 config.json
 ===========
 The important sections in the configuration are inputs, outputs and aggregator.  Each component of the section contains a **handler** and **config** options.
 
-The **handler** is the class responsible for managing that particular type of input.
+The handler is the class responsible for managing that particular type of input.
 
-**inputs**
+* **inputs**
 
-**outputs**
+* **outputs**
 
-**aggregator**
+* **aggregator**
 
 
 event-handlers.json
@@ -31,11 +31,11 @@ event-handlers.json
 This configuration file contains all events to listen to as well as handlers for each event::
 
 	{
-		"event.type": [
-			{
-				"driver": "<'shell' or 'pyfunc'>",
-				"handler": "<path_to_handler>"
-			}
-		]
+	  "event.type": [
+	    {
+		  "driver": "<'shell' or 'pyfunc'>",
+		  "handler": "<path_to_handler>"
+		}
+	  ]
 	}
 
