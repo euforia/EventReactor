@@ -13,6 +13,7 @@ setup(
     packages=find_packages(),
     data_files=[
         ('/etc/event-reactor', ['etc/config.json.sample', 'etc/event-handlers.json.sample']),
+        ('/etc/event-reactor/event-handlers', ['etc/event-handlers/testing.py']),
         ('/usr/local/bin',     ['fire-event.py', 'event-router.py', 'event-sub.py'])
     ],
     install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],

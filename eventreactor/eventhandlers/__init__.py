@@ -1,4 +1,5 @@
 
+import sys
 import json
 import subprocess
 
@@ -24,7 +25,8 @@ class PythonFuncDriver(HandlerDriver):
 
 	def execHandler(self, handler, event):
 		try:
-			mod_name = "eventhandlers.pyfunc.%s" %(".".join(handler.split(".")[:-1]))
+			#mod_name = "eventreactor.eventhandlers.pyfunc.%s" %(".".join(handler.split(".")[:-1]))
+			mod_name = ".".join(handler.split(".")[:-1])
 			os_mod = __import__(mod_name, fromlist=[mod_name])
 			return self.applyDefaultAttrs({
 				"code": 0,
@@ -57,7 +59,7 @@ class DriverManager(object):
 
 	driverTypes = ("pyfunc", "shell")
 
-	def __init__(self):
+	def __init__(self, event_handlers_dir=''):
 		#self.driverTypes = supported_types
 		self.drivers = {}
 		for dtype in self.driverTypes:
@@ -65,6 +67,9 @@ class DriverManager(object):
 				self.drivers[dtype] = ShellDriver()
 			elif dtype == "pyfunc":
 				self.drivers[dtype] = PythonFuncDriver()
+
+		if event_handlers_dir != "" and event_handlers_dir not in sys.path:
+			sys.path.append(event_handlers_dir)
 
 
 	def execDriverHandler(self, driver_type, handler, event):
