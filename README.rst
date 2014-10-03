@@ -30,12 +30,12 @@ event-handlers.json
 ===================
 This configuration file contains all events to listen to as well as handlers for each event::
 
-	{
-	  "event.type": [
-	    {
-		  "driver": "<'shell' or 'pyfunc'>",
-		  "handler": "<path_to_handler>"
-		}
-	  ]
-	}
+  {
+    "event.type": [
+      {
+        "driver": "<'shell' or 'pyfunc'>",
+        "handler": "<path_to_handler>"
+      }
+    ]
+  }
 
