@@ -16,9 +16,9 @@ The configurations live under **/etc/event-reactor**.
 
 * **config.json** - Global configuration file.
 
-* **event-handlers** - This directory contains user defined custom event handlers. 
+* **event-handlers** - Directory containing custom event handlers. 
 
-* **event-handlers.json** - Event subscription and respective handlers configuration.
+* **event-handlers.json** - Event subscription and respective handler configuration.
 
 config.json
 ===========
@@ -56,9 +56,10 @@ This configuration file contains all events to listen to as well as handlers for
 
 * event.type - The name of the event to subscribe to.
 
-* driver - This can either be 'shell' or 'pyfunc'.  
-	* shell - Allows to run arbitrary shell scripts on an event
-	* pyfunc - Allows to run a python function
+* driver
+This can either be **shell** or **pyfunc**.  
+	* **shell** - Allows to run arbitrary shell scripts on an event
+	* **pyfunc** - Allows to run a python function
 
 * handler
 	* shell
