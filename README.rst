@@ -88,11 +88,44 @@ Executables
 
 Controls the routing of events.  This takes multiple inputs, aggregates them and sends them down a univseral channel.
 
+Usage::
+	
+	Usage: event-router.py [options]
+
+	Options:
+	  -h, --help            show this help message and exit
+	  -c CONFIG, --config=CONFIG
+
 **event-sub.py**
 
 This subscribes to the output stream and fires the appropriate handlers based on the event.
+
+Usage::
+
+	Usage: event-sub.py [options]
+
+	Options:
+	  -h, --help            show this help message and exit
+	  --event-handlers=EVENTHANDLERS
+	                        Directory containing event handlers
+	  -e EVENTFILTERS, --event-filters=EVENTFILTERS
+	                        Event filters config file
+	  -u PUBURI, --publisher-uri=PUBURI
+	                        URI of publisher to connect to
+	  -l LOGLEVEL, --log-level=LOGLEVEL
 
 **fire-event.py**
 
 This is a utility script can be used to fire events into the system.
 
+Usage::
+
+	Usage: fire-event.py [options]
+
+	Options:
+	  -h, --help            show this help message and exit
+	  -d PAYLOAD, --data=PAYLOAD
+	  -e EVENTTYPE, --event-type=EVENTTYPE
+	  -n NAMESPACE, --namespace=NAMESPACE
+	  -u URI, --uri=URI
+	  -z ZMQTYPE, --zmq-type=ZMQTYPE
