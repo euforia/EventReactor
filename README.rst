@@ -118,7 +118,7 @@ Usage::
 
 This is a utility script can be used to fire events into the system.
 
-Usage::
+::
 
 	Usage: fire-event.py [options]
 
