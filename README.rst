@@ -84,7 +84,7 @@ This is the system startup script that controls both *router* and *sub* processe
 Executables
 -----------
 
-**event-router.py**
+**event-router.py [start|stop|restart|status]**
 
 Controls the routing of events.  This takes multiple inputs, aggregates them and sends them down a univseral channel.
 
