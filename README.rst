@@ -61,9 +61,11 @@ This configuration file contains all events to listen to as well as handlers for
 * handler - The shell command or path to python function to be executed.
 
 **shell**
+
 If the *shell* driver is used, the *handler* should contain a command ro run.  The event will be passed to the command as the last argument in the form of a json string.
 
 **pyfunc**
+
 If the *pyfunc* driver is used, the *handler* should contain a path to the python function.  This path should exist under the */etc/event-reactor/event-handlers* directory.
 
 
