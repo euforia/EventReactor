@@ -1,4 +1,5 @@
 
+import json
 import logging
 
 from eventreactor.mqaggr.wrappers.zmqwrappers import ZBase
