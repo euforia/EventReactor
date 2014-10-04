@@ -77,7 +77,7 @@ Usage
 Startup Scripts
 ---------------
 
-**/etc/init.d/event-reactor [start|stop|restart|status]**
+**/etc/init.d/event-reactor [ start | stop| restart | status ]**
 
 This is the system startup script that controls both *router* and *sub* processes.
 
