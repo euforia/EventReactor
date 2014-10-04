@@ -81,8 +81,8 @@ Startup Scripts
 
 This is the system startup script that controls both *router* and *sub* processes.
 
-Executeables
-------------
+Executables
+-----------
 
 **event-router.py**
 
