@@ -77,14 +77,14 @@ Usage
 Startup Scripts
 ---------------
 
-**/etc/init.d/event-reactor**
+**/etc/init.d/event-reactor [start|stop|restart|status]**
 
 This is the system startup script that controls both *router* and *sub* processes.
 
 Executables
 -----------
 
-**event-router.py [start|stop|restart|status]**
+**event-router.py**
 
 Controls the routing of events.  This takes multiple inputs, aggregates them and sends them down a univseral channel.
 
