@@ -60,8 +60,8 @@ This configuration file contains all events to listen to as well as handlers for
 
 * handler - The shell command or path to python function to be executed.
 
-
-* Drivers
+Drivers
+=======
 
 **shell**
 
