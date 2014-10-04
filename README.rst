@@ -21,7 +21,7 @@ The configurations live under **/etc/event-reactor**.
 * **event-handlers.json** - Event subscription and respective handler configuration.
 
 config.json
-===========
+-----------
 The important sections in the configuration are inputs, outputs and aggregator.  Each component of the section contains a **handler** and **config** options.
 
 The handler is the class responsible for managing that particular type of input.
@@ -33,7 +33,7 @@ The handler is the class responsible for managing that particular type of input.
 * **aggregator**
 
 event-handlers
-==============
+--------------
 These are custom user handlers.  They are located in the **/etc/event-reactor/event-handlers** directory.  A sample testing.py has been provided.  
 
 To add your own handler,
@@ -42,7 +42,7 @@ To add your own handler,
 * Update event-handlers.json with the appropriate information.  *More below*
 
 event-handlers.json
-===================
+-------------------
 This configuration file contains all events to listen to as well as handlers for each event::
 
   {
@@ -61,7 +61,7 @@ This configuration file contains all events to listen to as well as handlers for
 * handler - The shell command or path to python function to be executed.
 
 Drivers
-=======
+-------
 
 **shell**
 
@@ -71,4 +71,28 @@ If the *shell* **driver** is used, the **handler** should contain a command ro r
 
 If the *pyfunc* **driver** is used, the **handler** should contain a path to the python function.  This path should exist under the */etc/event-reactor/event-handlers* directory.
 
+Usage
+=====
+
+Startup Scripts
+---------------
+
+**/etc/init.d/event-reactor**
+
+This is the system startup script that controls both *router* and *sub* processes.
+
+Executeables
+------------
+
+**event-router.py**
+
+Controls the routing of events.  This takes multiple inputs, aggregates them and sends them down a univseral channel.
+
+**event-sub.py**
+
+This subscribes to the output stream and fires the appropriate handlers based on the event.
+
+**fire-event.py**
+
+This is a utility script can be used to fire events into the system.
 
