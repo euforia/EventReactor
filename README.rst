@@ -76,10 +76,9 @@ Usage
 
 Startup Scripts
 ---------------
+A system startup script has been included for **pre-RHEL 7** based systems.  The system startup script controls both **router** and **sub** processes.
 
-**/etc/init.d/event-reactor [ start | stop| restart | status ]**
-
-This is the system startup script that controls both *router* and *sub* processes.
+**/etc/init.d/event-reactor [ start | stop | restart | status ]**
 
 Executables
 -----------
