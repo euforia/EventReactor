@@ -88,7 +88,7 @@ Executables
 
 Controls the routing of events.  This takes multiple inputs, aggregates them and sends them down a univseral channel.
 
-Usage::
+::
 	
 	Usage: event-router.py [options]
 
@@ -100,7 +100,7 @@ Usage::
 
 This subscribes to the output stream and fires the appropriate handlers based on the event.
 
-Usage::
+::
 
 	Usage: event-sub.py [options]
 
