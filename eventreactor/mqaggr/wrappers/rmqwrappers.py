@@ -11,8 +11,7 @@ class RabbitMQConsumer(ConsumerMixin):
 
 	log = logging.getLogger("%s.RabbitMQConsumer" %(__name__))
 
-	def __init__(self, url, exchange_type, routing_key, queue_name, bindings, callbacks=None, namespace="default"):
-
+	def __init__(self, url, exchange_type, routing_key, queue_name, bindings, callbacks=None, namespace="local"):
 		self.namespace = namespace
 
 		exchange 	= Exchange(type=exchange_type)
@@ -45,7 +44,7 @@ class RabbitMQConsumer(ConsumerMixin):
  
 
 	def processEvent(self, body, message):
-		body['event_type'] = "%s.%s" %(self.namespace, body['event_type'])
+		#body['event_type'] = "%s.%s" %(self.namespace, body['event_type'])
 		for callback in self.userCallbacks:
 			callback(body)
 		message.ack()

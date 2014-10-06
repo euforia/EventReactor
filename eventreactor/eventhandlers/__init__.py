@@ -5,14 +5,18 @@ import subprocess
 
 from pprint import pprint
 
+
 class HandlerDriver(object):
 
 	def __init__(self, driver_type):
 		self.driverType = driver_type
 
-	def applyDefaultAttrs(self, attrs={}):
+	def applyDefaultAttrs(self, event, handler, attrs={}):
 		return dict([(k,v) for k,v in attrs.items()] + [ 
-							("driver_type", self.driverType) ])
+							("driver_type", self.driverType),
+							("event_type", event['event_type']),
+							("namespace", event['namespace']),
+							("handler", handler) ])
 
 	def process(self, event):
 		pass
@@ -28,14 +32,13 @@ class PythonFuncDriver(HandlerDriver):
 			#mod_name = "eventreactor.eventhandlers.pyfunc.%s" %(".".join(handler.split(".")[:-1]))
 			mod_name = ".".join(handler.split(".")[:-1])
 			os_mod = __import__(mod_name, fromlist=[mod_name])
-			return self.applyDefaultAttrs({
-				"code": 0,
-				"data": eval("os_mod.%s(event)" %(handler.split(".")[-1])),
-				"handler": handler
-			})
+			
+			return self.applyDefaultAttrs(event, handler, {
+								"code": 0,
+								"data": eval("os_mod.%s(event)" %(handler.split(".")[-1]))
+								})
 		except Exception,e:
-			return self.applyDefaultAttrs({ 
-					"error": True, "data": str(e), "handler": handler })
+			return self.applyDefaultAttrs(event, handler, { "error": True, "data": str(e) })
 
 
 class ShellDriver(HandlerDriver):
@@ -50,9 +53,9 @@ class ShellDriver(HandlerDriver):
 											stderr=subprocess.PIPE)
 		stdout, stderr = sproc.communicate()
 		if sproc.returncode != 0:
-			return self.applyDefaultAttrs({ "error": sproc.returncode, "data": stderr })
+			return self.applyDefaultAttrs(event, handler, { "error": sproc.returncode, "data": stderr })
 		else:
-			return self.applyDefaultAttrs({	"code": sproc.returncode, "data": stdout })
+			return self.applyDefaultAttrs(event, handler, { "code": sproc.returncode, "data": stdout })
 
 
 class DriverManager(object):
@@ -86,10 +89,11 @@ class EventFilterManager(object):
 				if not h.has_key('exclusive'):
 					h['exclusive'] = False
 
+	def eventTypeKey(self, event):
+		return "%(namespace)s:%(event_type)s" %(event)
 
 	def eventHandlers(self, event):
 		## get from some sort of db.
-		if self.listenEvents.has_key(event['event_type']):
-			return self.listenEvents[event['event_type']]
-		else:
-			return []
+		if self.listenEvents.has_key(self.eventTypeKey(event)):
+			return self.listenEvents[self.eventTypeKey(event)]
+		return []

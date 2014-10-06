@@ -14,4 +14,7 @@ def loadConfig(cfgfile):
 		output['config']['uri'] = "%(protocol)s://%(listen_address)s:%(port)d" %(
 																output['config'])
 
+	cfgdata['feeds']['aggregator']['uri'] = "%(protocol)s://%(host)s:%(port)d" %(
+													cfgdata['feeds']['aggregator'])	
+	
 	return cfgdata

@@ -12,76 +12,84 @@ from pprint import pprint
 
 class BaseInput(Process):
 
-	def __init__(self, outputUri, outputType="zmq.PUSH", config={}):
+	def __init__(self, aggr_config, namespace="local", config={}):
 		super(BaseInput, self).__init__(group=None, target=None, name=None, args=(), kwargs={})
+
+		self.namespace = namespace
 		self.config = config
-		self.outputUri = outputUri
-		self.outputType = outputType
+
+		self.outputUri = aggr_config['uri']
+		self.outputType = aggr_config['type']
+
+
+	def connectAggregator(self):
+		zbase = ZBase(uri=self.outputUri, zmqType=self.outputType)
+		zbase.connect()
+		return zbase
 
 
 class AMQPInput(BaseInput):
 
 	log = logging.getLogger("%s.AMQPInput" %(__name__))
 
-	def __init__(self, outputUri, outputType="zmq.PUSH", config={}):
-		super(AMQPInput, self).__init__(outputUri, outputType, config)
+	def __init__(self, aggr_config, namespace="local", config={}):
+		super(AMQPInput, self).__init__(aggr_config, namespace, config)
 		self.exit = Event()
 
 	def run(self):
-		zbase = ZBase(uri=self.outputUri, zmqType=self.outputType)
 		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
-		zbase.connect()
-		
+		aggrConn = self.connectAggregator()
+
 		rabbitmqConsumer = RabbitMQConsumer(**self.config)
 
 		def callback(event):
-			zbase.sock.send(json.dumps(event))
+			if not event.has_key('namespace'):
+				event['namespace'] = self.namespace
+
+			aggrConn.send(event)
+
 			if self.exit.is_set():
-				zbase.close()
+				aggrConn.close()
 				rabbitmqConsumer.stop()
 
 		rabbitmqConsumer.userCallbacks = [ callback ]	
 		rabbitmqConsumer.start()
 
-
 	def shutdown(self):
 		self.exit.set()
-
 
 
 class ZMQInput(BaseInput):
 
 	log = logging.getLogger("%s.ZMQInput" %(__name__))
 
-	def __init__(self, outputUri, outputType="zmq.PUSH", config={}):
-		super(ZMQInput, self).__init__(outputUri, outputType, config)
+	def __init__(self, aggr_config, namespace="local", config={}):
+		super(ZMQInput, self).__init__(aggr_config, namespace, config)
 		self.exit = Event()
 
-
-	def run(self):
-		output = ZBase(uri=self.outputUri, zmqType=self.outputType)
-		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
-		output.connect()
-
+	def startInputServer(self):
 		inputServer = ZBase(uri=self.config['uri'], zmqType=self.config['type'])
 		self.log.info("Listening on (%s): %s" %(self.config['type'], self.config['uri']))
 		inputServer.bind()
+		return inputServer
+
+	def run(self):
+		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
+		aggrConn = self.connectAggregator()
+
+		inputServer = self.startInputServer()
 
 		while not self.exit.is_set():
 			reqStr = inputServer.sock.recv()
-			
 			req = json.loads(reqStr)
-			if req.has_key('namespace'):
-				req['event_type'] = "%s.%s" %(req['namespace'], req['event_type'])
-			else:
-				req['event_type'] = "%s.%s" %(self.config['namespace'], req['event_type'])
+			if not req.has_key('namespace'):
+				req['namespace'] = self.namespace
 			
-			output.send(req)
+			aggrConn.send(req)
 			inputServer.send(req)
 
+		aggrConn.close()
 		inputServer.close()
-		output.close()
-
 
 	def shutdown(self):
 		self.exit.set()
