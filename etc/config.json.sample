@@ -1,24 +1,32 @@
 {
-	"inputs": [
-		{
-			"handler": "AMQPInput",
-			"config": {
-				"url": "amqp://<username>:<password>@<host>:<port>",
-				"routing_key": "notifications.info",
-				"exchange_type": "direct",
-				"queue_name": "<your_queue_name>",
-				"namespace": "openstack",
-				"bindings": [ "keystone", "nova", "neutron" ]
+	"feeds": {
+		"aggregator": {
+			"protocol": "tcp",
+			"host": "127.0.0.1",
+			"port": 45454,
+			"type": "zmq.PUSH"
+		},
+		"feeders": [
+			{
+				"handler": "AMQPInput",
+				"config": {
+					"url": "amqp://<username>:<password>@<host>:<port>",
+					"routing_key": "notifications.info",
+					"exchange_type": "direct",
+					"queue_name": "<your_queue_name>",
+					"namespace": "openstack",
+					"bindings": [ "keystone", "nova", "neutron" ]
+				}
+			},{
+				"handler": "ZMQInput",
+				"config": {
+					"uri": "tcp://*:55055",
+					"namespace": "local",
+					"type": "zmq.REP"
+				}
 			}
-		},{
-			"handler": "ZMQInput",
-			"config": {
-				"uri": "tcp://*:55055",
-				"namespace": "local",
-				"type": "zmq.REP"
-			}
-		}
-	],
+		]
+	},
 	"outputs": [
 		{
 			"handler": "zeromq",

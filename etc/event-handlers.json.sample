@@ -1,5 +1,5 @@
 {
-	"local.zmq.test": [
+	"local:zmq.test": [
 		{
 			"driver": "shell",
 			"handler": "echo",
