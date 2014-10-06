@@ -10,30 +10,15 @@ import logging
 import json
 from optparse import OptionParser
 
-from eventreactor.mqaggr.wrappers.zmqwrappers import ZBase
-
+from eventreactor.clients import EventPusher
 
 log = logging.getLogger(__name__)
-
-
 LOG_FORMAT = "%(asctime)s (%(process)d) [%(levelname)s %(lineno)s:%(name)s.%(funcName)s]: %(message)s"
-
-
-class EventPusher(object):
-	def __init__(self, uri, zmq_type="zmq.REQ"):
-		self.uri = uri
-		self.zbase = ZBase(self.uri, zmq_type)
-		self.zbase.connect()
-
-	def pushEvent(self, data):
-		self.zbase.send(data)
-		rslt = self.zbase.sock.recv()
-		return json.loads(rslt)
 
 
 def checkOptions():
 	parser = OptionParser()
-	parser.add_option("-d", "--data", 		dest="payload")
+	parser.add_option("-p", "--payload", 	dest="payload")
 	parser.add_option("-e", "--event-type", dest="eventType")
 	parser.add_option("-n", "--namespace",  dest="namespace", default="local")
 	parser.add_option("-u", "--uri", 		dest="uri", 	  default="tcp://127.0.0.1:55055")
@@ -59,12 +44,7 @@ def main():
 	(opts, args) = checkOptions()	
 
 	epusher = EventPusher(opts.uri)
-
-	resp = epusher.pushEvent({
-					'namespace' : opts.namespace,
-					'event_type': opts.eventType, 
-					'payload'   : opts.payload
-					})
+	resp = epusher.pushEvent(opts.namespace, opts.eventType,  opts.payload)
 	print resp
 
 	epusher.zbase.close()
