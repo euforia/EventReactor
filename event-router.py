@@ -13,14 +13,12 @@ from eventreactor.mqaggr.inputs import *
 from pprint import pprint 
 
 
-def loadInputFeeders(config):
-
-	# localhost host should be the host the feeders connect to, to submit data
-	aggrClientUri = "%(protocol)s://localhost:%(port)d" %(config['aggregator']['config'])
+def loadInputFeeds(config):
 	feeders = []
-	for qi in config['inputs']:
-		feeder = eval("%s(outputUri=aggrClientUri, config=qi['config'])" %(
-																qi['handler']))
+	for qi in config['feeders']:
+		if qi['namespace'] == 'openstack': continue
+		feeder = eval("%s(config['aggregator'], namespace=qi['namespace'], config=qi['config'])" %(
+																					qi['handler']))
 		feeder.start()
 		feeders.append(feeder)		
 	return feeders
@@ -47,7 +45,6 @@ def main():
 	logging.basicConfig(level=eval("logging.%s" %(opts.config['logging']['loglevel'])), 
 												format=opts.config['logging']['format'])
 	
-
 	aggrConfig = opts.config['aggregator']['config']
 	aggrServer = ZBase(aggrConfig['uri'], aggrConfig['type'])
 	log.info("Listening on (%s): %s" %(aggrConfig['type'], aggrConfig['uri']))
@@ -58,23 +55,27 @@ def main():
 	log.info("Listening on (%s): %s" %(pubSrvCfg['type'], pubSrvCfg['uri']))
 	pubServer.bind()
 	
-	feeders = loadInputFeeders(opts.config)
-	log.info("Feeders loaded: %d" %(len(feeders)))
+	feeds = loadInputFeeds(opts.config['feeds'])
+	log.info("Feeders loaded: %d" %(len(feeds)))
 	try:
 		## Feed data to publishing stream
 		while True:
-
-			rslt = aggrServer.sock.recv()
-			resp = json.loads(rslt)
-			log.info("Publishing: %(event_type)s" %(resp))
 			
-			pubServer.sock.send(rslt)
+			rslt = aggrServer.sock.recv()
+			try:
+				resp = json.loads(rslt)
+				log.info("Publishing: %(namespace)s:%(event_type)s" %(resp))
+			
+				pubServer.sock.send(rslt)
+
+			except Exception,e:
+				log.error("%s '%s'" %(str(e), str(rslt)))
 
 	except KeyboardInterrupt:
 		
-		for feeder in feeders:
-			feeder.shutdown()
-			feeder.terminate()
+		for feed in feeds:
+			feed.shutdown()
+			feed.terminate()
 
 		#aggrServer.close()
 		#pubServer.close()
