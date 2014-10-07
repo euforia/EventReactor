@@ -45,7 +45,7 @@ status() {
 }
 
 start_subscriber() {
-	${SUBSCRIBER} >> ${LOGIDR}/${SUBSCRIBER_NAME}.log 2>&1 &
+	${SUBSCRIBER} >> ${LOGDIR}/${SUBSCRIBER_NAME}.log 2>&1 &
 	sleep 2;
 	subscriber_status;
 
@@ -62,7 +62,7 @@ start() {
 }
 
 stop_router() {
-	echo -n "Stopping ${NAME}... "
+	echo -n "${ROUTER_NAME} stopping... "
 	R_PIDS=`${PGREP} "${ROUTER}" | sort -r`
 	for pid in $R_PIDS; do
 		kill $pid;
@@ -70,7 +70,7 @@ stop_router() {
 	echo "[ok]"
 }
 stop_subscriber() {
-	echo -n "Stopping ${NAME}... "
+	echo -n "${SUBSCRIBER_NAME} stopping... "
 	S_PIDS=`${PGREP} "${SUBSCRIBER}" | sort -r`
 	for pid in $S_PIDS; do
 		kill $pid;
