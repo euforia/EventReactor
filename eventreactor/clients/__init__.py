@@ -10,7 +10,7 @@ class EventPusher(object):
 
 	log = logging.getLogger("%s.EventPusher" %(__name__))
 
-	def __init__(self, uri):
+	def __init__(self, uri="tcp://127.0.0.1:55055"):
 		self.zmqType = "zmq.REQ"
 		self.uri = uri
 		self.zbase = ZBase(self.uri, self.zmqType)
