@@ -128,3 +128,14 @@ This is a utility script can be used to fire events into the system.
 	  -n NAMESPACE, --namespace=NAMESPACE
 	  -u URI, --uri=URI
 	  -z ZMQTYPE, --zmq-type=ZMQTYPE
+
+Design
+======
+::
+  
+  client   	                 server
+
+  feeders:      -- PUSH -->  45454 : PULL
+  user_input:   -- REQ  -->  55055 : REP
+  subscribers:  -- SUB  <--  55000 : SUB 
+
