@@ -29,11 +29,7 @@ class EventPusher(object):
 			'payload'   : payload
 		}
 		if parent_event != None: data['parent_event'] = parent_event
-		'''
-		self.zbase.send(data)
-		rslt = self.zbase.sock.recv()
-		return json.loads(rslt)
-		'''
+
 		return self._pushEvent(data)
 
 	def _pushEvent(self, event):
