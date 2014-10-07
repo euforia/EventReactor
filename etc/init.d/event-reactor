@@ -25,7 +25,7 @@ check_logdir() {
 
 router_status() {
 	R_PIDS=`${PGREP} "${ROUTER}" | xargs`
-	if [ "$R_PID" == "" ]; then
+	if [ "$R_PIDS" == "" ]; then
 		echo "${ROUTER_NAME} not running!"
 	else
 		echo "${ROUTER_NAME} running... [${R_PIDS}]"
@@ -33,7 +33,7 @@ router_status() {
 }
 subscriber_status() {
 	S_PIDS=`${PGREP} "${SUBSCRIBER}" | xargs`
-	if [ "$S_PID" == "" ]; then
+	if [ "$S_PIDS" == "" ]; then
 		echo "${SUBSCRIBER_NAME} not running!"
 	else
 		echo "${SUBSCRIBER_NAME} running... [${S_PIDS}]"
