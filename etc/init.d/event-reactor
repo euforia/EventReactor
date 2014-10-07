@@ -62,16 +62,20 @@ start() {
 }
 
 stop_router() {
+	echo -n "Stopping ${NAME}... "
 	R_PIDS=`${PGREP} "${ROUTER}" | sort -r`
 	for pid in $R_PIDS; do
 		kill $pid;
 	done
+	echo "[ok]"
 }
 stop_subscriber() {
+	echo -n "Stopping ${NAME}... "
 	S_PIDS=`${PGREP} "${SUBSCRIBER}" | sort -r`
 	for pid in $S_PIDS; do
 		kill $pid;
 	done
+	echo "[ok]"
 }
 stop() {
 	stop_router;
