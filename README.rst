@@ -136,6 +136,6 @@ Design
   client                     server
 
   feeders:      -- PUSH -->  45454 : PULL
-  user_input:   -- REQ  -->  55055 : REP
+  user input:   -- REQ  -->  55055 : REP
   subscribers:  -- SUB  <--  55000 : SUB 
 
