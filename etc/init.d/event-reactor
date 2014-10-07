@@ -12,8 +12,8 @@ NAME="event-reactor"
 ROUTER_NAME="event-router"
 SUBSCRIBER_NAME="event-sub"
 
-ROUTER="${ROUTER_NAME}.py"
-SUBSCRIBER="${SUBSCRIBER_NAME}.py"
+ROUTER="/usr/local/bin/${ROUTER_NAME}.py"
+SUBSCRIBER="/usr/local/bin/${SUBSCRIBER_NAME}.py"
 
 LOGDIR="/var/log/${NAME}"
 
