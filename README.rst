@@ -133,7 +133,7 @@ Design
 ======
 ::
   
-  client   	                 server
+  client                     server
 
   feeders:      -- PUSH -->  45454 : PULL
   user_input:   -- REQ  -->  55055 : REP
