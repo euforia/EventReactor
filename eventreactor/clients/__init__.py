@@ -67,13 +67,13 @@ class EventSubscriber(object):
 	def runHandlers(self, handlers, data):
 		for handler in handlers:
 			if handler.get('exclusive'):
-				self.log.warning("TODO: EXCLUSIVE handler: %s, data: %s" %(str(handler), str(data)))
+				self.log.warning("TODO: EXCLUSIVE PROCESS handler: %s, data: %s" %(str(handler), str(data)))
+			
+			rslt = self.__executeHandler(handler, data)
+			if rslt.has_key('error'):
+				self.log.error("Result: %s" %(str(rslt)))
 			else:
-				rslt = self.__executeHandler(handler, data)
-				if rslt.has_key('error'):
-					self.log.error("Result: %s" %(str(rslt)))
-				else:
-					self.log.info("Result: %s" %(str(rslt)))
+				self.log.info("Result: %s" %(str(rslt)))
 
 
 	def start(self, callback=None):
