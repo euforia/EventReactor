@@ -91,6 +91,7 @@ case "$1" in
 		stop;
 		sleep 2;
 		start;
+		;;
 	*)
 		echo "$0 [start|stop|restart|status]"
 		exit 1;
