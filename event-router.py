@@ -16,6 +16,8 @@ from pprint import pprint
 def loadInputFeeds(config):
 	feeders = []
 	for qi in config['feeders']:
+		if qi.get('disabled'):
+			continue
 		feeder = eval("%s(config['aggregator'], namespace=qi['namespace'], config=qi['config'])" %(
 																					qi['handler']))
 		feeder.start()
