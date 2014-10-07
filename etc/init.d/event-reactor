@@ -12,8 +12,8 @@ NAME="event-reactor"
 ROUTER_NAME="event-router"
 SUBSCRIBER_NAME="event-sub"
 
-ROUTER="${ROUTER_NAME}.py -c /etc/${NAME}/config.json"
-SUBSCRIBER="${SUBSCRIBER_NAME}.py -c /etc/${NAME}/event-handlers.json"
+ROUTER="${ROUTER_NAME}.py"
+SUBSCRIBER="${SUBSCRIBER_NAME}.py"
 
 LOGDIR="/var/log/${NAME}"
 
