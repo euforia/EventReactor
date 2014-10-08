@@ -31,7 +31,7 @@ The important sections in the configuration are inputs, outputs and aggregator. 
 
 The handler is the class responsible for managing that particular type of input.
 
-* **inputs**
+* **feeders**
 
 * **outputs**
 
