@@ -17,7 +17,7 @@ setup(
         ('/usr/local/bin',                    ['fire-event.py', 'event-router.py', 'event-sub.py']),
         ('/etc/init.d',                       ['etc/init.d/event-reactor', 'etc/init.d/celeryd']),
         ('/etc/sysconfig',                    ['etc/sysconfig/celeryd']),
-        ('/opt/event-reactor',                ['eventworker/__init__.py', 'eventworker/celeryconfig.py', 'eventworker/tasks.py'])
+        ('/opt/event-reactor/eventworker',    ['eventworker/__init__.py', 'eventworker/celeryconfig.py', 'eventworker/tasks.py'])
     ],
     install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
 )
