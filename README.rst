@@ -6,8 +6,13 @@ A system designed to take multiple inputs and publish them to an aggregated outp
 
 Installation
 ============
+A running version of mongodb is required.  Under redhat the package is called:
 
-* pip install git+https://github.com/euforia/EventReactor.git
+* mongodb-org
+
+To install the application, run::
+
+	pip install git+https://github.com/euforia/EventReactor.git
 
 
 Configuration
