@@ -6,8 +6,6 @@ CELERYD_NODES="worker"
 
 CELERY_BIN="/usr/bin/celery"
 
-CELERYD_CHDIR="/opt/event-reactor"
-
 # Extra command-line arguments to the worker
 CELERYD_OPTS="--config=eventworker.celeryconfig"
 

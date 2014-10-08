@@ -8,20 +8,20 @@
 		},
 		"feeders": [
 			{
+				"namespace": "openstack",
 				"handler": "AMQPInput",
 				"config": {
 					"url": "amqp://<username>:<password>@<host>:<port>",
 					"routing_key": "notifications.info",
 					"exchange_type": "direct",
 					"queue_name": "<your_queue_name>",
-					"namespace": "openstack",
 					"bindings": [ "keystone", "nova", "neutron" ]
 				}
 			},{
+				"namespace": "local",
 				"handler": "ZMQInput",
 				"config": {
 					"uri": "tcp://*:55055",
-					"namespace": "local",
 					"type": "zmq.REP"
 				}
 			}
