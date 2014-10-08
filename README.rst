@@ -27,15 +27,12 @@ The configurations live under **/etc/event-reactor**.
 
 config.json
 -----------
-The important sections in the configuration are inputs, outputs and aggregator.  Each component of the section contains a **handler** and **config** options.
+The important sections in the configuration are:
 
-The handler is the class responsible for managing that particular type of input.
+* feeds
+* outputs
+* aggregator 
 
-* **feeders**
-
-* **outputs**
-
-* **aggregator**
 
 event-handlers
 --------------
