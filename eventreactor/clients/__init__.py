@@ -2,8 +2,15 @@
 import json
 import logging
 
+from celery import Celery
+
 from eventreactor.mqaggr.wrappers.zmqwrappers import ZBase
-from eventreactor.eventhandlers import EventFilterManager, DriverManager
+from eventreactor.eventhandlers import EventFilterManager
+
+
+CELERY_EVENT_HANDLER_FUNC = "eventworker.tasks.executeEventHandler"
+CELERY_CONFIG_MODULE = "eventworker.celeryconfig"
+CELERY_APP_NAME = "eventworker"
 
 
 class EventPusher(object):
@@ -45,32 +52,19 @@ class EventSubscriber(object):
 
 	log = logging.getLogger("%s.EventSubscriber" %(__name__))
 
-	def __init__(self, uri, event_filters, event_handlers_dir=''):
+	def __init__(self, uri, event_filters):
 		self.uri = uri
 		self.zbase = ZBase(self.uri, "zmq.SUB")
 		self.eventFilters = EventFilterManager(event_filters)
-		self.eventHandlersDir = event_handlers_dir
-		self.__driverMgr = DriverManager(self.eventHandlersDir)
 
-
-	def __executeHandler(self, handler, event):
-		#dm = DriverManager()
-		return self.__driverMgr.execDriverHandler(
-									handler['driver'], 
-									handler['handler'], event)
+		self.__celery = Celery(CELERY_APP_NAME)
+		self.__celery.config_from_object(CELERY_CONFIG_MODULE)
 
 
 	def runHandlers(self, handlers, data):
 		for handler in handlers:
-			if handler.get('exclusive'):
-				self.log.warning("TODO: EXCLUSIVE PROCESS handler: %s, data: %s" %(str(handler), str(data)))
-			
-			rslt = self.__executeHandler(handler, data)
-			if rslt.has_key('error'):
-				self.log.error("Result: %s" %(str(rslt)))
-			else:
-				self.log.info("Result: %s" %(str(rslt)))
-
+			self.log.info("Submitting task: %s" % data)
+			self.__celery.send_task(CELERY_EVENT_HANDLER_FUNC, (handler, data))
 
 	def start(self, callback=None):
 		self.zbase.connect()
@@ -81,8 +75,9 @@ class EventSubscriber(object):
 				data = json.loads(dataStr)
 
 				handlers = self.eventFilters.eventHandlers(data)
-				self.log.info("namespace: %s, event: %s, handlers: %s" %(data['namespace'], 
-														data['event_type'], str(handlers)))
+				self.log.info("namespace: %s, event: %s, handlers: %s" %(
+					data['namespace'], data['event_type'], str(handlers)))
+				
 				self.runHandlers(handlers, data)
 
 				if callback != None: callback(data)

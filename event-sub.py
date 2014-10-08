@@ -45,8 +45,7 @@ def main():
 
 	esub = EventSubscriber(
 				uri=opts.pubUri, 
-				event_filters=opts.eventFilters, 
-				event_handlers_dir=opts.eventHandlers)
+				event_filters=opts.eventFilters)
 	esub.start()
 
 

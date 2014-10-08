@@ -15,7 +15,8 @@ setup(
         ('/etc/event-reactor',                ['etc/config.json.sample', 'etc/event-handlers.json.sample']),
         ('/etc/event-reactor/event-handlers', ['etc/event-handlers/testing.py']),
         ('/usr/local/bin',                    ['fire-event.py', 'event-router.py', 'event-sub.py']),
-        ('/etc/init.d',                       ['etc/init.d/event-reactor'])
+        ('/etc/init.d',                       ['etc/init.d/event-reactor', 'etc/init.d/celeryd']),
+        ('/etc/sysconfig',                    ['etc/sysconfig/celeryd'])
     ],
     install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
 )
