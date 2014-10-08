@@ -1,4 +1,5 @@
 
+import time
 import logging
 import json
 
@@ -73,6 +74,14 @@ class ZMQInput(BaseInput):
 		inputServer.bind()
 		return inputServer
 
+	def __checkRequest(self, reqStr):
+		req = json.loads(reqStr)
+		if not req.has_key('namespace'):
+			req['namespace'] = self.namespace
+		if not req.has_key('timestamp'):
+			req['timestamp'] = time.time()
+		return req
+
 	def run(self):
 		self.log.info("Connecting to (%s): %s" %(self.outputType, self.outputUri))
 		aggrConn = self.connectAggregator()
@@ -81,11 +90,11 @@ class ZMQInput(BaseInput):
 
 		while not self.exit.is_set():
 			reqStr = inputServer.sock.recv()
-			req = json.loads(reqStr)
-			if not req.has_key('namespace'):
-				req['namespace'] = self.namespace
+			req = self.__checkRequest(reqStr)
 			
+			# send event to aggregator
 			aggrConn.send(req)
+			# respond to client with event sent to aggregator
 			inputServer.send(req)
 
 		aggrConn.close()
