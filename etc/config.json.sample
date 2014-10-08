@@ -49,5 +49,13 @@
 	"logging": {
 		"format": "%(asctime)s (%(process)d) [%(levelname)s %(lineno)s:%(name)s.%(funcName)s]: %(message)s",
 		"loglevel": "INFO"
+	},
+	"celery": {
+		"protocol": "mongodb",
+		"host": "127.0.0.1",
+		"port": 27017,
+		"database": "eventreactor",
+		"task_collection": "task_collection",
+		"task_imports": ["eventworker.tasks"]
 	}
 }
