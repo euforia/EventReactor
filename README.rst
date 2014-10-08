@@ -140,9 +140,10 @@ This is a utility script can be used to fire events into the system.
 Design
 ======
 ::
-                            :--------------------------:
-        feeders -- PUSH --> | 45454 : PULL             |
-                            |              PUB : 55000 | -- SUB --> subscribers
-  custom events -- REQ  --> | 55055 : REP              |
-                            :--------------------------:
+
+	                          :--------------------------:
+	      feeders -- PUSH --> | 45454 : PULL             |
+	                          |              PUB : 55000 | -- SUB --> subscribers
+	custom events -- REQ  --> | 55055 : REP              |
+	                          :--------------------------:
 
