@@ -20,5 +20,3 @@ setup(
     ],
     install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
 )
-#packages=find_packages(exclude=["eventworker"]),
-#('/opt/event-reactor/eventworker',    ['eventworker/__init__.py', 'eventworker/celeryconfig.py', 'eventworker/tasks.py'])
