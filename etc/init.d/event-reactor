@@ -28,7 +28,7 @@ router_status() {
 	if [ "$R_PIDS" == "" ]; then
 		echo "${ROUTER_NAME} not running!"
 	else
-		echo "${ROUTER_NAME} running... [${R_PIDS}]"
+		echo "${ROUTER_NAME} running... [ ${R_PIDS} ]"
 	fi
 }
 subscriber_status() {
@@ -36,7 +36,7 @@ subscriber_status() {
 	if [ "$S_PIDS" == "" ]; then
 		echo "${SUBSCRIBER_NAME} not running!"
 	else
-		echo "${SUBSCRIBER_NAME} running... [${S_PIDS}]"
+		echo "${SUBSCRIBER_NAME} running... [ ${S_PIDS} ]"
 	fi
 }
 status() {

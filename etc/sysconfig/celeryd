@@ -4,22 +4,12 @@
 # Space delimited worker process names
 CELERYD_NODES="worker"
 
-# Absolute or relative path to the 'celery' command:
 CELERY_BIN="/usr/bin/celery"
 
-# App instance to use
-# comment out this line if you don't use an app
-# or fully qualified:
-#CELERY_APP="proj.tasks:app"
-
-# Where to chdir at start.
 CELERYD_CHDIR="/opt/event-reactor"
 
 # Extra command-line arguments to the worker
 CELERYD_OPTS="--config=eventworker.celeryconfig"
-
-# Extra CLI arguments for scheduler
-#CELERYBEAT_OPTS="--config=eventworker.celeryconfig"
 
 # %N will be replaced with the first part of the nodename.
 CELERYD_LOG_FILE="/var/log/event-reactor/%N.log"

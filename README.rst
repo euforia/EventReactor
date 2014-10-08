@@ -77,8 +77,16 @@ Usage
 Startup Scripts
 ---------------
 A system startup script has been included for **pre-RHEL 7** based systems.  The system startup script controls both **router** and **sub** processes.
+::
+	/etc/init.d/event-reactor [ start | stop | restart | status ]
 
-**/etc/init.d/event-reactor [ start | stop | restart | status ]**
+The celery daemon can be started as follows::
+
+	/etc/init.d/celeryd start
+
+Before starting the celery daemon, make sure the **celery** user exists.  The following command creates the celery user if it doesn't exist::
+
+	( id celery 2>&1 ) > /dev/null || useradd celery;
 
 Executables
 -----------

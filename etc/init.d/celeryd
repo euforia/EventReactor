@@ -184,6 +184,10 @@ create_paths() {
     create_default_dir "$CELERYD_PID_DIR"
 }
 
+check_user() {
+    ( id $CELERYD_USER 2>&1 ) > /dev/null || useradd $CELERYD_USER;
+}
+
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 
 
@@ -311,6 +315,7 @@ check_status () {
 case "$1" in
     start)
         check_dev_null
+        check_user
         check_paths
         start_workers
     ;;
