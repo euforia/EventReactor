@@ -2,7 +2,6 @@
 import os
 
 from eventreactor.conf import loadConfig
-import eventworker.tasks
 
 CONFIG_FILE = os.environ.get('EVENT_REACTOR_CONFIG')
 if CONFIG_FILE == None:
