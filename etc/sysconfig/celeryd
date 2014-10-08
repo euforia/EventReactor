@@ -9,12 +9,11 @@ CELERY_BIN="/usr/bin/celery"
 
 # App instance to use
 # comment out this line if you don't use an app
-#CELERY_APP="lyx"
 # or fully qualified:
 #CELERY_APP="proj.tasks:app"
 
 # Where to chdir at start.
-#CELERYD_CHDIR="/etc/event-reactor"
+CELERYD_CHDIR="/opt/event-reactor"
 
 # Extra command-line arguments to the worker
 CELERYD_OPTS="--config=eventworker.celeryconfig"

@@ -10,13 +10,14 @@ setup(
     author='euforia',
     author_email='euforia@gmail.com',
     license='LICENSE.txt',
-    packages=find_packages(),
+    packages=find_packages(exclude=["eventworker"]),
     data_files=[
         ('/etc/event-reactor',                ['etc/config.json.sample', 'etc/event-handlers.json.sample']),
         ('/etc/event-reactor/event-handlers', ['etc/event-handlers/testing.py']),
         ('/usr/local/bin',                    ['fire-event.py', 'event-router.py', 'event-sub.py']),
         ('/etc/init.d',                       ['etc/init.d/event-reactor', 'etc/init.d/celeryd']),
-        ('/etc/sysconfig',                    ['etc/sysconfig/celeryd'])
+        ('/etc/sysconfig',                    ['etc/sysconfig/celeryd']),
+        ('/opt/event-reactor',                ['eventworker/__init__.py', 'eventworker/celeryconfig.py', 'eventworker/tasks.py'])
     ],
     install_requires=[ p for p in open('REQUIREMENTS.txt').read().split('\n') if p != '' ],
 )
