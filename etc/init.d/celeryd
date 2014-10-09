@@ -182,6 +182,7 @@ check_paths() {
 create_paths() {
     create_default_dir "$CELERYD_LOG_DIR"
     create_default_dir "$CELERYD_PID_DIR"
+    create_default_dir "$CELERYD_CHDIR"
 }
 
 check_user() {
