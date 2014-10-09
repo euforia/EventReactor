@@ -3,6 +3,7 @@ import os
 
 from eventreactor.conf import loadConfig
 
+# check the environment var.  this is useful when running from the cli
 CONFIG_FILE = os.environ.get('EVENT_REACTOR_CONFIG')
 if CONFIG_FILE == None:
 	CONFIG_FILE = "/etc/event-reactor/config.json"
