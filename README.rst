@@ -6,7 +6,7 @@ A system designed to take multiple inputs and publish them to an aggregated outp
 
 Requirements
 ============
-A running version of mongodb is required.  Under redhat the package is called:
+A running version of mongodb is required.  Under RedHat the package is called:
 
 * mongodb-org
 
