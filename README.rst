@@ -4,11 +4,21 @@ Event Reactor
 A system designed to take multiple inputs and publish them to an aggregated output stream which can then be reacted upon with user actions in the form of python code or just shell scripts.
 
 
-Installation
+Requirements
 ============
 A running version of mongodb is required.  Under redhat the package is called:
 
 * mongodb-org
+
+Before proceeding to the installation you may need to clean out pip temp build directory.  You can do so by issuing the following command::
+
+	rm -rvf /tmp/pip-build-root
+
+The above is the default location on RedHat.  This location may be different based on your distribution.
+
+
+Installation
+============
 
 To install the application, run::
 
