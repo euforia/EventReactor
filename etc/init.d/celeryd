@@ -40,6 +40,7 @@ DEFAULT_LOG_FILE="/var/log/event-reactor/%n.log"
 DEFAULT_LOG_LEVEL="INFO"
 DEFAULT_NODES="celery"
 DEFAULT_CELERYD="-m celery worker --detach"
+DEFAULT_CHDIR="/var/lib/celery"
 
 CELERY_DEFAULTS=${CELERY_DEFAULTS:-"/etc/sysconfig/${SCRIPT_NAME}"}
 
@@ -176,6 +177,9 @@ check_paths() {
     fi
     if [ $CELERY_CREATE_RUNDIR -eq 1 ]; then
         create_default_dir "$CELERYD_PID_DIR"
+    fi
+    if [ ! -e "$CELERYD_CHDIR" ]; then
+        create_default_dir "$CELERYD_CHDIR"
     fi
 }
 
