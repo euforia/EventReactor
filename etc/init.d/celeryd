@@ -40,9 +40,10 @@ DEFAULT_LOG_FILE="/var/log/event-reactor/%n.log"
 DEFAULT_LOG_LEVEL="INFO"
 DEFAULT_NODES="celery"
 DEFAULT_CELERYD="-m celery worker --detach"
-DEFAULT_CHDIR="/var/lib/celery"
 
 CELERY_DEFAULTS=${CELERY_DEFAULTS:-"/etc/sysconfig/${SCRIPT_NAME}"}
+
+CELERYD_CHDIR=${CELERYD_CHDIR:-"/var/lib/celery"}
 
 # Make sure executable configuration script is owned by root
 _config_sanity() {
