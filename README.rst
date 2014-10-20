@@ -6,9 +6,10 @@ A system designed to take multiple inputs and publish them to an aggregated outp
 
 Requirements
 ============
-A running version of mongodb is required.  Under RedHat the package is called:
+A running version of mongodb is required as well as zeromq.  Under RedHat the needed packages are called:
 
 * mongodb-org
+* zeromq-devel
 
 Before proceeding to the installation you may need to clean out pip temp build directory.  You can do so by issuing the following command::
 
